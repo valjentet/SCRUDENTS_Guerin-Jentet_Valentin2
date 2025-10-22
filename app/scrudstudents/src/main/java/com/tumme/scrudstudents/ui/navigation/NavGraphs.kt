@@ -2,8 +2,10 @@ package com.tumme.scrudstudents.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
@@ -16,16 +18,6 @@ import com.tumme.scrudstudents.ui.student.StudentDetailScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeFormScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeListScreen
 
-/**
- * AppNavHost sets up the navigation graph for the Student module.
- *
- * role:
- * Defines routes for the student list, form, and detail screens.
- * Handles navigation between screens using NavController.
- * Passes studentId as an argument to the detail screen.
- *
- * Uses Jetpack Compose Navigation and Hilt.
- */
 object Routes {
     // Student routes
     const val STUDENT_LIST = "student_list"
@@ -45,12 +37,15 @@ object Routes {
 @Composable
 fun AppNavHost(
     students: List<StudentEntity>,
-    courses: List<CourseEntity>
+    courses: List<CourseEntity>,
+    navController: NavHostController
 ) {
-    val navController = rememberNavController()
-    NavHost(navController, startDestination = Routes.STUDENT_LIST) {
+    NavHost(
+        navController = navController,
+        startDestination = Routes.STUDENT_LIST
+    ) {
 
-        // Student screens
+        // --- Student screens ---
         composable(Routes.STUDENT_LIST) {
             StudentListScreen(
                 onNavigateToForm = { navController.navigate(Routes.STUDENT_FORM) },
@@ -61,14 +56,17 @@ fun AppNavHost(
             StudentFormScreen(onSaved = { navController.popBackStack() })
         }
         composable(
-            "student_detail/{studentId}",
+            route = "student_detail/{studentId}",
             arguments = listOf(navArgument("studentId") { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("studentId") ?: 0
-            StudentDetailScreen(studentId = id, onBack = { navController.popBackStack() })
+            StudentDetailScreen(
+                studentId = id,
+                onBack = { navController.popBackStack() }
+            )
         }
 
-        // Course screens
+        // --- Course screens ---
         composable(Routes.COURSE_LIST) {
             CourseListScreen(
                 onNavigateToForm = { navController.navigate(Routes.COURSE_FORM) },
@@ -79,14 +77,17 @@ fun AppNavHost(
             CourseFormScreen(onSaved = { navController.popBackStack() })
         }
         composable(
-            "course_detail/{courseId}",
+            route = "course_detail/{courseId}",
             arguments = listOf(navArgument("courseId") { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("courseId") ?: 0
-            CourseDetailScreen(courseId = id, onBack = { navController.popBackStack() })
+            CourseDetailScreen(
+                courseId = id,
+                onBack = { navController.popBackStack() }
+            )
         }
 
-        // Subscribe screens
+        // --- Subscribe screens ---
         composable(Routes.SUBSCRIBE_LIST) {
             SubscribeListScreen(
                 onNavigateToForm = { navController.navigate(Routes.SUBSCRIBE_FORM) }

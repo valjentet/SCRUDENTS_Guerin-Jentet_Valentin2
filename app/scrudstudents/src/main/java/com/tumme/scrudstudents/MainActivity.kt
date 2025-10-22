@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tumme.scrudstudents.ui.navigation.AppNavHost
 import com.tumme.scrudstudents.ui.navigation.Routes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,43 +22,51 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
-                var currentDestination by remember { mutableStateOf(Routes.STUDENT_LIST) }
+                val backStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = backStackEntry?.destination?.route
 
                 Scaffold(
                     bottomBar = {
                         NavigationBar {
                             NavigationBarItem(
-                                selected = currentDestination == Routes.STUDENT_LIST,
+                                selected = currentRoute == Routes.STUDENT_LIST,
                                 onClick = {
-                                    navController.navigate(Routes.STUDENT_LIST)
-                                    currentDestination = Routes.STUDENT_LIST
+                                    navController.navigate(Routes.STUDENT_LIST) {
+                                        popUpTo(Routes.STUDENT_LIST) { inclusive = false }
+                                        launchSingleTop = true
+                                    }
                                 },
                                 label = { Text("Students") },
-                                icon = {} // Aucun icône
+                                icon = {}
                             )
                             NavigationBarItem(
-                                selected = currentDestination == Routes.COURSE_LIST,
+                                selected = currentRoute == Routes.COURSE_LIST,
                                 onClick = {
-                                    navController.navigate(Routes.COURSE_LIST)
-                                    currentDestination = Routes.COURSE_LIST
+                                    navController.navigate(Routes.COURSE_LIST) {
+                                        popUpTo(Routes.COURSE_LIST) { inclusive = false }
+                                        launchSingleTop = true
+                                    }
                                 },
                                 label = { Text("Courses") },
                                 icon = {}
                             )
                             NavigationBarItem(
-                                selected = currentDestination == Routes.SUBSCRIBE_LIST,
+                                selected = currentRoute == Routes.SUBSCRIBE_LIST,
                                 onClick = {
-                                    navController.navigate(Routes.SUBSCRIBE_LIST)
-                                    currentDestination = Routes.SUBSCRIBE_LIST
+                                    navController.navigate(Routes.SUBSCRIBE_LIST) {
+                                        popUpTo(Routes.SUBSCRIBE_LIST) { inclusive = false }
+                                        launchSingleTop = true
+                                    }
                                 },
                                 label = { Text("Subscribes") },
                                 icon = {}
                             )
                         }
                     }
-                ) {innerPadding ->
+                ) { innerPadding ->
                     Box(Modifier.padding(innerPadding)) {
                         AppNavHost(
+                            navController = navController,
                             students = emptyList(),
                             courses = emptyList()
                         )
