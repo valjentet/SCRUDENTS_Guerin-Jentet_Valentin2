@@ -1,0 +1,37 @@
+package com.tumme.scrudstudents.ui.course
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.tumme.scrudstudents.data.local.model.CourseEntity
+import com.tumme.scrudstudents.data.repository.SCRUDRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class CourseListViewModel @Inject constructor(
+    private val repo: SCRUDRepository
+) : ViewModel() {
+
+    // StateFlow for list of courses
+    private val _courses: StateFlow<List<CourseEntity>> =
+        repo.getAllCourses().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    val courses: StateFlow<List<CourseEntity>> = _courses
+
+    // UI events
+    private val _events = MutableSharedFlow<String>()
+    val events = _events.asSharedFlow()
+
+    fun insertCourse(course: CourseEntity) = viewModelScope.launch {
+        repo.insertCourse(course)
+        _events.emit("Course inserted")
+    }
+
+    fun deleteCourse(course: CourseEntity) = viewModelScope.launch {
+        repo.deleteCourse(course)
+        _events.emit("Course deleted")
+    }
+
+    suspend fun findCourse(id: Int) = repo.getCourseById(id)
+}
