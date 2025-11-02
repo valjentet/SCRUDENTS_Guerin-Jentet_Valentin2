@@ -1,26 +1,27 @@
-package com.tumme.scrudstudents.ui.course
+package com.tumme.scrudstudents.ui.subscribe
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.tumme.scrudstudents.data.local.model.SubscribeEntity
+import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 
 @Composable
-fun CourseRow(
-    course: CourseEntity,
-    onEdit: () -> Unit,
-    onDelete: () -> Unit,
-    onView: () -> Unit,
-    onShare: () -> Unit
+fun SubscribeRow(
+    subscribe: SubscribeEntity,
+    students: List<StudentEntity>,
+    courses: List<CourseEntity>,
+    onDelete: () -> Unit
 ) {
+    val student = students.find { it.idStudent == subscribe.studentId }
+    val course = courses.find { it.idCourse == subscribe.courseId }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,39 +34,25 @@ fun CourseRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = course.idCourse.toString(),
-                modifier = Modifier.weight(0.15f)
-            )
-
-            Text(
-                text = course.nameCourse,
+                text = student?.let { "${it.firstName} ${it.lastName}" } ?: "Unknown",
                 modifier = Modifier.weight(0.35f)
             )
-
+            
             Text(
-                text = course.ectsCourse.toString(),
+                text = course?.nameCourse ?: "Unknown",
+                modifier = Modifier.weight(0.35f)
+            )
+            
+            Text(
+                text = subscribe.score.toString(),
                 modifier = Modifier.weight(0.15f)
             )
-
-            Text(
-                text = course.levelCourse.value,
-                modifier = Modifier.weight(0.20f)
-            )
-
+            
             Row(
                 modifier = Modifier.weight(0.15f)
             ) {
-                IconButton(onClick = onView) {
-                    Icon(Icons.Default.Visibility, contentDescription = "View")
-                }
-                IconButton(onClick = onEdit) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
-                }
                 IconButton(onClick = onDelete) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
-                }
-                IconButton(onClick = onShare) {
-                    Icon(Icons.Default.Share, contentDescription = "Share")
                 }
             }
         }

@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+
+
 /**
  * Composable screen that displays the list of students.
  *
@@ -21,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
  * Uses Material3 components and LazyColumn for efficient scrolling.
  * Column won't work
  */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentListScreen(

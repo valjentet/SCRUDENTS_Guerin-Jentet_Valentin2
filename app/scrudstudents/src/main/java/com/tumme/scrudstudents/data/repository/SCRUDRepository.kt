@@ -7,7 +7,6 @@ import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
 import kotlinx.coroutines.flow.Flow
-
 /**
  * SCRUDRepository acts as a single access point for data operations.
  * It connects the ViewModels to the different DAOs (Student, Course, Subscribe)
@@ -22,8 +21,6 @@ class SCRUDRepository(
     private val subscribeDao: SubscribeDao
 ) {
     // Students
-    //Uses Kotlin coroutines for background database operations.
-
     fun getAllStudents(): Flow<List<StudentEntity>> = studentDao.getAllStudents()
     suspend fun insertStudent(student: StudentEntity) = studentDao.insert(student)
     suspend fun deleteStudent(student: StudentEntity) = studentDao.delete(student)

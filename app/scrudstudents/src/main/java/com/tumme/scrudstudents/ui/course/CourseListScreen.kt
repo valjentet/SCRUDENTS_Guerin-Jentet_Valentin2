@@ -9,11 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tumme.scrudstudents.data.local.model.CourseEntity
-import com.tumme.scrudstudents.ui.student.StudentListViewModel
-import com.tumme.scrudstudents.ui.student.StudentRow
-import kotlinx.coroutines.Job
-
 /**
  * Composable screen that displays the list of students.
  *
@@ -36,21 +31,22 @@ fun CourseListScreen(
     val courses by viewModel.courses.collectAsState()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Courses") }) },
+        topBar = {
+            TopAppBar(title = { Text("Courses") })
+        },
         floatingActionButton = {
-            FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
+            FloatingActionButton(onClick = onNavigateToForm) {
+                Text("+")
+            }
         }
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)
+            .padding(16.dp)
         ) {
-            TableHeader(
-                cells = listOf("Name", "ECTS", "Level", "Actions"),
-                weights = listOf(0.4f, 0.2f, 0.2f, 0.2f)
-            )
+            TableHeader(cells = listOf("ID", "Name", "ECTS", "Level", "Actions"),
+                weights = listOf(0.15f, 0.35f, 0.15f, 0.20f, 0.15f))
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -58,17 +54,13 @@ fun CourseListScreen(
                 items(courses) { course ->
                     CourseRow(
                         course = course,
-                        //onEdit = { /* navigate to form prefilled (not implemented) */ },
+                        onEdit = { },
                         onDelete = { viewModel.deleteCourse(course) },
-                        onView = { onNavigateToDetail(course.idCourse) }
+                        onView = { onNavigateToDetail(course.idCourse) },
+                        onShare = { }
                     )
                 }
             }
         }
     }
-}
-
-@Composable
-fun CourseRow(course: CourseEntity, onEdit: () -> Unit, onDelete: () -> Job, onView: () -> Unit) {
-    TODO("Not yet implemented")
 }

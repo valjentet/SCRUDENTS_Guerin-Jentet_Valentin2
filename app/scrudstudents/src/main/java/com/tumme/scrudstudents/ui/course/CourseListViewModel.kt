@@ -14,23 +14,14 @@ class CourseListViewModel @Inject constructor(
     private val repo: SCRUDRepository
 ) : ViewModel() {
 
-    // StateFlow for list of courses
-    private val _courses: StateFlow<List<CourseEntity>> =
-        repo.getAllCourses().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    val courses: StateFlow<List<CourseEntity>> = _courses
-
-    // UI events
-    private val _events = MutableSharedFlow<String>()
-    val events = _events.asSharedFlow()
-
-    fun insertCourse(course: CourseEntity) = viewModelScope.launch {
-        repo.insertCourse(course)
-        _events.emit("Course inserted")
-    }
+    val courses = repo.getAllCourses().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun deleteCourse(course: CourseEntity) = viewModelScope.launch {
         repo.deleteCourse(course)
-        _events.emit("Course deleted")
+    }
+
+    fun insertCourse(course: CourseEntity) = viewModelScope.launch {
+        repo.insertCourse(course)
     }
 
     suspend fun findCourse(id: Int) = repo.getCourseById(id)

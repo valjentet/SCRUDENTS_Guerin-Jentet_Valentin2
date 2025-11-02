@@ -4,12 +4,14 @@ import androidx.room.*
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import kotlinx.coroutines.flow.Flow
 
+
 /**
  * StudentDao defines the basic operations on the students table.
  * It is an interface used by Room to automatically generate
  * the SQL code that interacts with the database. DAO inserts the class creaated
  * in Studententity.
  */
+
 @Dao
 interface StudentDao {
     @Query("SELECT * FROM students ORDER BY lastName, firstName")

@@ -22,7 +22,6 @@ import com.tumme.scrudstudents.data.local.model.StudentEntity
  *
  * Uses Jetpack Compose for layout.
  */
-
 @Composable
 fun StudentFormScreen(
     viewModel: StudentListViewModel = hiltViewModel(),

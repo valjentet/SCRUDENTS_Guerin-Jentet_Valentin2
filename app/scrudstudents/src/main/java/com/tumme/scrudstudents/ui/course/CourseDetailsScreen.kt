@@ -1,8 +1,6 @@
 package com.tumme.scrudstudents.ui.course
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,10 +10,11 @@ import com.tumme.scrudstudents.data.local.model.CourseEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CourseDetailScreen(
+fun CourseDetailsScreen(
     courseId: Int,
     viewModel: CourseListViewModel = hiltViewModel(),
-    onBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onNavigateToEdit: () -> Unit = {}
 ) {
     var course by remember { mutableStateOf<CourseEntity?>(null) }
 
@@ -23,28 +22,41 @@ fun CourseDetailScreen(
         course = viewModel.findCourse(courseId)
     }
 
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text("Course Details") },
-            navigationIcon = {
-                IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = "Back") }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Course Details") },
+                navigationIcon = {
+                    TextButton(onClick = onNavigateBack) {
+                        Text("Back")
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        if (course != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp)
+            ) {
+                Text("Course ID: ${course!!.idCourse}")
+                Text("Course Name: ${course!!.nameCourse}")
+                Text("ECTS Credits: ${course!!.ectsCourse}")
+                Text("Level: ${course!!.levelCourse.value}")
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = onNavigateToEdit,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Edit Course")
+                }
             }
-        )
-    }) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            if (course == null) {
-                Text("Loading...")
-            } else {
-                Text("ID: ${course!!.idCourse}")
-                Text("Name: ${course!!.nameCourse}")
-                Text("ECTS: ${course!!.ectsCourse}")
-                Text("Level: ${course!!.levelCourse}")
-            }
+        } else {
+            Text("Course not found")
         }
     }
 }
