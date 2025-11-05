@@ -64,17 +64,27 @@ fun AuthScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         if (isRegisterMode) {
-            Text("Role:")
+            Text("Role:", style = MaterialTheme.typography.labelLarge)
+            Spacer(modifier = Modifier.height(4.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(UserRole.Student, UserRole.Teacher).forEach { role ->
                     Button(
                         onClick = { selectedRole = role },
-                        colors = if (selectedRole == role)
-                            ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
-                        else
-                            ButtonDefaults.buttonColors()
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedRole == role)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.surfaceVariant
+                        ),
+                        modifier = Modifier.weight(1f)
                     ) {
-                        Text(role.name)
+                        Text(
+                            text = role.name,
+                            color = if (selectedRole == role)
+                                MaterialTheme.colorScheme.onPrimary
+                            else
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             }
