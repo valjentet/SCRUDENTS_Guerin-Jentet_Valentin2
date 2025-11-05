@@ -25,6 +25,7 @@ import com.tumme.scrudstudents.ui.course.CourseFormScreen
 import com.tumme.scrudstudents.ui.course.CourseDetailsScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeListScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeFormScreen
+import kotlinx.serialization.builtins.BooleanArraySerializer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,6 @@ fun MainScreen(
             TopAppBar(
                 title = { Text("SCRUD Students") },
                 actions = {
-                    // Affichage du rôle en haut à droite
                     currentUser?.let { user ->
                         Row(
                             modifier = Modifier.padding(end = 16.dp),
