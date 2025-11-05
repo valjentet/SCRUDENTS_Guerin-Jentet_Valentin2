@@ -18,8 +18,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "scrud-db").build()
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "scrud_students_db"
+        )
+            .fallbackToDestructiveMigration() // ⬅️ IMPORTANT
+            .build()
+    }
 
     @Provides
     fun provideUserDao(db: AppDatabase): UserDao = db.userDao()
@@ -32,15 +39,4 @@ object AppModule {
 
     @Provides
     fun provideSubscribeDao(db: AppDatabase): SubscribeDao = db.subscribeDao()
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(userDao: UserDao): AuthRepository =
-        AuthRepository(userDao)
-
-    @Provides
-    @Singleton
-    fun provideSCRUDRepository(studentDao: StudentDao, courseDao: CourseDao,
-                               subscribeDao: SubscribeDao): SCRUDRepository =
-        SCRUDRepository(studentDao, courseDao, subscribeDao)
 }

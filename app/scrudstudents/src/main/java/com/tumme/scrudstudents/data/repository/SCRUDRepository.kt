@@ -7,15 +7,19 @@ import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
+
 /**
  * SCRUDRepository acts as a single access point for data operations.
  * It connects the ViewModels to the different DAOs (Student, Course, Subscribe)
- * and centralizes all CRUD operations for each entity. We'll use this for course entity
+ * and centralizes all CRUD operations for each entity.
  *
  * The repository abstracts the data layer, allowing the ViewModel
  * to interact with data sources without knowing the specific details.
  */
-class SCRUDRepository(
+@Singleton
+class SCRUDRepository @Inject constructor(
     private val studentDao: StudentDao,
     private val courseDao: CourseDao,
     private val subscribeDao: SubscribeDao

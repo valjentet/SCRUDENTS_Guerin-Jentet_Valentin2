@@ -11,7 +11,8 @@ import com.tumme.scrudstudents.data.local.model.*
 
 @Database(
     entities = [UserEntity::class, StudentEntity::class, CourseEntity::class, SubscribeEntity::class],
-    version = 1
+    version = 2, // ⬅️ Version 2
+    exportSchema = false // ⬅️ Évite les erreurs de schéma en dev
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
