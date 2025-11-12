@@ -31,19 +31,23 @@ class StudentListViewModel @Inject constructor(
     val students: StateFlow<List<StudentEntity>> = _students
 
     // UI event / error Flow
-    private val _events = MutableSharedFlow<String>()
+    private val _events = MutableSharedFlow<StudentListEvent>()
     val events = _events.asSharedFlow()
 
     fun deleteStudent(student: StudentEntity) = viewModelScope.launch {
         repo.deleteStudent(student)
-        _events.emit("Student deleted")
+        _events.emit(StudentListEvent.StudentDeleted)
     }
 
     fun insertStudent(student: StudentEntity) = viewModelScope.launch {
         repo.insertStudent(student)
-        _events.emit("Student inserted")
+        _events.emit(StudentListEvent.StudentInserted)
     }
 
     suspend fun findStudent(id: Int) = repo.getStudentById(id)
 
+    sealed class StudentListEvent {
+        data object StudentDeleted : StudentListEvent()
+        data object StudentInserted : StudentListEvent()
+    }
 }

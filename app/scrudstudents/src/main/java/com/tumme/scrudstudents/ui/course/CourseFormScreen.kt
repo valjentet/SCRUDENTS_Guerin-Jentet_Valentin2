@@ -1,13 +1,26 @@
 package com.tumme.scrudstudents.ui.course
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.R
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.LevelCourse
 
@@ -25,7 +38,7 @@ fun CourseFormScreen(
         TextField(
             value = nameCourse,
             onValueChange = { nameCourse = it },
-            label = { Text("Course Name") },
+            label = { Text(stringResource(R.string.course_form_name)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -34,14 +47,14 @@ fun CourseFormScreen(
         TextField(
             value = ectsCourse,
             onValueChange = { ectsCourse = it },
-            label = { Text("ECTS Credits") },
+            label = { Text(stringResource(R.string.course_form_ects)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
 
         Spacer(Modifier.height(16.dp))
 
-        Text("Course Level")
+        Text(stringResource(R.string.course_form_level))
 
         Row {
             LevelCourse.entries.forEach { level ->
@@ -72,7 +85,7 @@ fun CourseFormScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Save Course")
+            Text(stringResource(R.string.course_form_save))
         }
     }
 }

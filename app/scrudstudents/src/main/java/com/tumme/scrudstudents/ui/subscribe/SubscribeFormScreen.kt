@@ -1,16 +1,30 @@
 package com.tumme.scrudstudents.ui.subscribe
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.R
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.CourseEntity
@@ -31,7 +45,7 @@ fun SubscribeFormScreen(
     val courses by viewModel.courses.collectAsState(initial = emptyList())
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Student")
+        Text(stringResource(R.string.subscribe_form_student))
 
         ExposedDropdownMenuBox(
             expanded = expandedStudent,
@@ -41,7 +55,7 @@ fun SubscribeFormScreen(
                 value = selectedStudent?.let { "${it.firstName} ${it.lastName}" } ?: "",
                 onValueChange = { /* readOnly */ },
                 readOnly = true,
-                label = { Text("Select Student") },
+                label = { Text(stringResource(R.string.subscribe_form_select_student)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedStudent) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -65,7 +79,7 @@ fun SubscribeFormScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        Text("Course")
+        Text(stringResource(R.string.subscribe_form_course))
 
         ExposedDropdownMenuBox(
             expanded = expandedCourse,
@@ -75,7 +89,7 @@ fun SubscribeFormScreen(
                 value = selectedCourse?.nameCourse ?: "",
                 onValueChange = { /* readOnly */ },
                 readOnly = true,
-                label = { Text("Select Course") },
+                label = { Text(stringResource(R.string.subscribe_form_select_course)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedCourse) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -102,7 +116,7 @@ fun SubscribeFormScreen(
         TextField(
             value = score,
             onValueChange = { score = it },
-            label = { Text("Score") },
+            label = { Text(stringResource(R.string.subscribe_form_score)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
@@ -130,7 +144,7 @@ fun SubscribeFormScreen(
             enabled = canSave,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Save Subscription")
+            Text(stringResource(R.string.subscribe_form_save))
         }
     }
 }

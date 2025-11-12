@@ -1,12 +1,35 @@
 package com.tumme.scrudstudents.ui.auth
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.R
 import com.tumme.scrudstudents.data.local.model.UserRole
+import com.tumme.scrudstudents.ui.auth.AuthViewModel.AuthError
+import com.tumme.scrudstudents.ui.strings.localizedLabel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,7 +44,7 @@ fun AuthScreen(
     var isRegisterMode by remember { mutableStateOf(false) }
     var selectedRole by remember { mutableStateOf(UserRole.Student) }
 
-    val errorMessage by viewModel.errorMessage.collectAsState()
+    val error by viewModel.error.collectAsState()
     val currentUser by viewModel.currentUser.collectAsState()
 
     // Callback dès que currentUser est non-null
@@ -41,7 +64,7 @@ fun AuthScreen(
             TextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Name") },
+                label = { Text(stringResource(R.string.auth_name_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -50,7 +73,7 @@ fun AuthScreen(
         TextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.auth_email_label)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -58,13 +81,13 @@ fun AuthScreen(
         TextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.auth_password_label)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         if (isRegisterMode) {
-            Text("Role:", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.auth_role_label), style = MaterialTheme.typography.labelLarge)
             Spacer(modifier = Modifier.height(4.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(UserRole.Student, UserRole.Teacher).forEach { role ->
@@ -79,7 +102,7 @@ fun AuthScreen(
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(
-                            text = role.name,
+                            text = role.localizedLabel(),
                             color = if (selectedRole == role)
                                 MaterialTheme.colorScheme.onPrimary
                             else
@@ -91,8 +114,17 @@ fun AuthScreen(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        if (errorMessage != null) {
-            Text(errorMessage!!, color = MaterialTheme.colorScheme.error)
+        error?.let { authError ->
+            Text(
+                text = stringResource(
+                    when (authError) {
+                        AuthError.UserNotFound -> R.string.auth_error_user_not_found
+                        AuthError.WrongPassword -> R.string.auth_error_wrong_password
+                        AuthError.EmailAlreadyRegistered -> R.string.auth_error_email_registered
+                    }
+                ),
+                color = MaterialTheme.colorScheme.error
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
@@ -106,7 +138,11 @@ fun AuthScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (isRegisterMode) "Register" else "Login")
+            Text(
+                text = stringResource(
+                    if (isRegisterMode) R.string.auth_register else R.string.auth_login
+                )
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -115,7 +151,15 @@ fun AuthScreen(
             onClick = { isRegisterMode = !isRegisterMode },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (isRegisterMode) "Already have an account? Login" else "Don't have an account? Register")
+            Text(
+                text = stringResource(
+                    if (isRegisterMode) {
+                        R.string.auth_toggle_have_account
+                    } else {
+                        R.string.auth_toggle_no_account
+                    }
+                )
+            )
         }
     }
 }

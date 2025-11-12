@@ -18,19 +18,19 @@ class AuthViewModel @Inject constructor(
     private val _currentUser = MutableStateFlow<UserEntity?>(null)
     val currentUser: StateFlow<UserEntity?> = _currentUser
 
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
+    private val _error = MutableStateFlow<AuthError?>(null)
+    val error: StateFlow<AuthError?> = _error
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
             val user = repository.getUserByEmail(email)
-            if (user == null) {
-                _errorMessage.value = "User not found"
-            } else if (user.password != password) {
-                _errorMessage.value = "Wrong password"
-            } else {
-                _currentUser.value = user
-                _errorMessage.value = null
+            _error.value = when {
+                user == null -> AuthError.UserNotFound
+                user.password != password -> AuthError.WrongPassword
+                else -> {
+                    _currentUser.value = user
+                    null
+                }
             }
         }
     }
@@ -39,7 +39,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val existingUser = repository.getUserByEmail(email)
             if (existingUser != null) {
-                _errorMessage.value = "Email already registered"
+                _error.value = AuthError.EmailAlreadyRegistered
                 return@launch
             }
             val newUser = UserEntity(
@@ -50,7 +50,13 @@ class AuthViewModel @Inject constructor(
             )
             repository.insertUser(newUser)
             _currentUser.value = newUser
-            _errorMessage.value = null
+            _error.value = null
         }
+    }
+
+    enum class AuthError {
+        UserNotFound,
+        WrongPassword,
+        EmailAlreadyRegistered
     }
 }

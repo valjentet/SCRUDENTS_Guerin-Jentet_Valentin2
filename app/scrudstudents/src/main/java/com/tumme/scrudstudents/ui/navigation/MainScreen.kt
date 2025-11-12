@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -16,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.tumme.scrudstudents.R
 import com.tumme.scrudstudents.ui.auth.AuthViewModel
 import com.tumme.scrudstudents.ui.student.StudentListScreen
 import com.tumme.scrudstudents.ui.student.StudentFormScreen
@@ -25,7 +27,7 @@ import com.tumme.scrudstudents.ui.course.CourseFormScreen
 import com.tumme.scrudstudents.ui.course.CourseDetailsScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeListScreen
 import com.tumme.scrudstudents.ui.subscribe.SubscribeFormScreen
-import kotlinx.serialization.builtins.BooleanArraySerializer
+import com.tumme.scrudstudents.ui.strings.localizedLabel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +40,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("SCRUD Students") },
+                title = { Text(stringResource(R.string.main_title)) },
                 actions = {
                     currentUser?.let { user ->
                         Row(
@@ -48,11 +50,11 @@ fun MainScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Person,
-                                contentDescription = "User role",
+                                contentDescription = stringResource(R.string.main_user_role_cd),
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Text(
-                                text = user.role.name,
+                                text = user.role.localizedLabel(),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -67,22 +69,22 @@ fun MainScreen(
                 val currentDestination = navBackStackEntry?.destination
 
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Students") },
-                    label = { Text("Students") },
+                    icon = { Icon(Icons.Default.Person, contentDescription = stringResource(R.string.nav_students_cd)) },
+                    label = { Text(stringResource(R.string.nav_students_label)) },
                     selected = currentDestination?.hierarchy?.any { it.route == "students" } == true,
                     onClick = { navController.navigate("students") }
                 )
 
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.School, contentDescription = "Courses") },
-                    label = { Text("Courses") },
+                    icon = { Icon(Icons.Default.School, contentDescription = stringResource(R.string.nav_courses_cd)) },
+                    label = { Text(stringResource(R.string.nav_courses_label)) },
                     selected = currentDestination?.hierarchy?.any { it.route == "courses" } == true,
                     onClick = { navController.navigate("courses") }
                 )
 
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Assignment, contentDescription = "Subscriptions") },
-                    label = { Text("Subscribe") },
+                    icon = { Icon(Icons.Default.Assignment, contentDescription = stringResource(R.string.nav_subscriptions_cd)) },
+                    label = { Text(stringResource(R.string.nav_subscriptions_label)) },
                     selected = currentDestination?.hierarchy?.any { it.route == "subscribes" } == true,
                     onClick = { navController.navigate("subscribes") }
                 )

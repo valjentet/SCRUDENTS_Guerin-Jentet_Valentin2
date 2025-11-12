@@ -16,9 +16,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import java.io.IOException
 import androidx.core.net.toUri
+import com.tumme.ii3510_courseapp_2526.R
 
 private const val TAG = "LifecycleActivity"
 
@@ -185,17 +187,17 @@ fun LifecycleLoggerScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Cycle de vie de l'Activity & MediaPlayer",
+            text = stringResource(R.string.lifecycle_screen_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(onClick = onPlay) {
-                Text("Play Musique (Raw)")
+                Text(stringResource(R.string.button_play_music_raw))
             }
             Button(onClick = onStopPlayer) {
-                Text("Stop Musique")
+                Text(stringResource(R.string.button_stop_music))
             }
         }
 
@@ -203,7 +205,7 @@ fun LifecycleLoggerScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Événements du Cycle de Vie:",
+            text = stringResource(R.string.lifecycle_events_title),
             style = MaterialTheme.typography.titleMedium
         )
         LazyColumn(modifier = Modifier

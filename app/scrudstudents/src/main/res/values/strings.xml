@@ -1,3 +1,95 @@
 <resources>
     <string name="app_name">SCRUDStudents</string>
+
+    <!-- Main -->
+    <string name="main_title">SCRUD Students</string>
+    <string name="main_user_role_cd">User role</string>
+    <string name="role_student">Student</string>
+    <string name="role_teacher">Teacher</string>
+    <string name="nav_students_label">Students</string>
+    <string name="nav_students_cd">Students section</string>
+    <string name="nav_courses_label">Courses</string>
+    <string name="nav_courses_cd">Courses section</string>
+    <string name="nav_subscriptions_label">Subscriptions</string>
+    <string name="nav_subscriptions_cd">Subscriptions section</string>
+
+    <!-- Authentication -->
+    <string name="auth_name_label">Name</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_role_label">Role</string>
+    <string name="auth_register">Register</string>
+    <string name="auth_login">Login</string>
+    <string name="auth_toggle_have_account">Already have an account? Login</string>
+    <string name="auth_toggle_no_account">No account yet? Register</string>
+    <string name="auth_error_user_not_found">User not found</string>
+    <string name="auth_error_wrong_password">Wrong password</string>
+    <string name="auth_error_email_registered">Email already registered</string>
+
+    <!-- Generic -->
+    <string name="generic_loading">Loading...</string>
+    <string name="generic_back">Back</string>
+    <string name="generic_view">View</string>
+    <string name="generic_edit">Edit</string>
+    <string name="generic_delete">Delete</string>
+    <string name="generic_share">Share</string>
+    <string name="generic_actions">Actions</string>
+
+    <!-- Students -->
+    <string name="students_title">Students</string>
+    <string name="students_table_dob">DOB</string>
+    <string name="students_table_last">Last</string>
+    <string name="students_table_first">First</string>
+    <string name="students_table_gender">Gender</string>
+    <string name="student_details_title">Student details</string>
+    <string name="student_details_id">ID: %1$d</string>
+    <string name="student_details_name">Name: %1$s %2$s</string>
+    <string name="student_details_dob">DOB: %1$s</string>
+    <string name="student_details_gender">Gender: %1$s</string>
+    <string name="student_form_last_name">Last Name</string>
+    <string name="student_form_first_name">First Name</string>
+    <string name="student_form_birthdate">Date of birth (yyyy-MM-dd)</string>
+    <string name="student_form_gender_label">Gender</string>
+    <string name="student_form_save">Save</string>
+    <string name="student_event_deleted">Student deleted</string>
+    <string name="student_event_inserted">Student inserted</string>
+
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_not_concerned">Not concerned</string>
+
+    <!-- Courses -->
+    <string name="courses_title">Courses</string>
+    <string name="courses_table_id">ID</string>
+    <string name="courses_table_name">Name</string>
+    <string name="courses_table_ects">ECTS</string>
+    <string name="courses_table_level">Level</string>
+    <string name="course_details_title">Course Details</string>
+    <string name="course_details_id">Course ID: %1$d</string>
+    <string name="course_details_name">Course Name: %1$s</string>
+    <string name="course_details_ects">ECTS Credits: %1$s</string>
+    <string name="course_details_level">Level: %1$s</string>
+    <string name="course_details_edit">Edit Course</string>
+    <string name="course_details_not_found">Course not found</string>
+    <string name="course_form_name">Course Name</string>
+    <string name="course_form_ects">ECTS Credits</string>
+    <string name="course_form_level">Course Level</string>
+    <string name="course_form_save">Save Course</string>
+
+    <!-- Subscriptions -->
+    <string name="subscriptions_title">Subscriptions</string>
+    <string name="subscriptions_table_student">Student</string>
+    <string name="subscriptions_table_course">Course</string>
+    <string name="subscriptions_table_score">Score</string>
+    <string name="subscribe_unknown">Unknown</string>
+    <string name="subscribe_form_student">Student</string>
+    <string name="subscribe_form_select_student">Select Student</string>
+    <string name="subscribe_form_course">Course</string>
+    <string name="subscribe_form_select_course">Select Course</string>
+    <string name="subscribe_form_score">Score</string>
+    <string name="subscribe_form_save">Save Subscription</string>
+
+    <!-- Home -->
+    <string name="teacher_home_message">Welcome to the teacher page 👨‍🏫</string>
+    <string name="student_home_message">Welcome to the student page 🎓</string>
 </resources>

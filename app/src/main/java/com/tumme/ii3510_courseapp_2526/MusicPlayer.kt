@@ -11,7 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.tumme.ii3510_courseapp_2526.R
 
 class MusicPlayer : AppCompatActivity() {
     private var isMusicPlaying = false
@@ -105,7 +107,7 @@ class MusicPlayer : AppCompatActivity() {
 fun MusicPlayerUI(onPlayPause: () -> Unit, isPlaying: () -> Boolean) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("🎵 Simple Music Player") })
+            TopAppBar(title = { Text(stringResource(R.string.title_music_player)) })
         }
     ) { padding ->
         Column(
@@ -116,12 +118,22 @@ fun MusicPlayerUI(onPlayPause: () -> Unit, isPlaying: () -> Boolean) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(if (isPlaying()) "Now Playing..." else "Stopped")
+            val statusText = if (isPlaying()) {
+                stringResource(R.string.status_now_playing)
+            } else {
+                stringResource(R.string.status_stopped)
+            }
+            Text(statusText)
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(onClick = onPlayPause) {
-                Text(if (isPlaying()) "Pause" else "Play")
+                val actionText = if (isPlaying()) {
+                    stringResource(R.string.action_pause)
+                } else {
+                    stringResource(R.string.action_play)
+                }
+                Text(actionText)
             }
         }
     }

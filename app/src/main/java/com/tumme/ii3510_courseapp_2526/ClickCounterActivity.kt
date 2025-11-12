@@ -11,8 +11,11 @@ import androidx.compose.runtime.saveable.rememberSaveable // Important for state
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tumme.ii3510_courseapp_2526.R
 
 private const val TAG = "ClickCounterActivity"
 
@@ -77,13 +80,13 @@ fun CounterScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Click Counter",
+            text = stringResource(R.string.click_counter_title),
             fontSize = 24.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         Text(
-            text = "Button Clicks: $clickCount",
+            text = stringResource(R.string.click_counter_count, clickCount),
             fontSize = 32.sp,
             modifier = Modifier.padding(bottom = 24.dp)
         )
@@ -92,7 +95,7 @@ fun CounterScreen() {
             clickCount++
             Log.d(TAG, "Button Clicked! New Count: $clickCount")
         }) {
-            Text("Click Me!")
+            Text(stringResource(R.string.click_counter_button))
         }
     }
 }

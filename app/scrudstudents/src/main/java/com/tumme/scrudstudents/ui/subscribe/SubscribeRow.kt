@@ -1,13 +1,20 @@
 package com.tumme.scrudstudents.ui.subscribe
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.tumme.scrudstudents.R
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
 import com.tumme.scrudstudents.data.local.model.StudentEntity
 import com.tumme.scrudstudents.data.local.model.CourseEntity
@@ -34,15 +41,16 @@ fun SubscribeRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = student?.let { "${it.firstName} ${it.lastName}" } ?: "Unknown",
+                text = student?.let { "${it.firstName} ${it.lastName}" }
+                    ?: stringResource(R.string.subscribe_unknown),
                 modifier = Modifier.weight(0.35f)
             )
-            
+
             Text(
-                text = course?.nameCourse ?: "Unknown",
+                text = course?.nameCourse ?: stringResource(R.string.subscribe_unknown),
                 modifier = Modifier.weight(0.35f)
             )
-            
+
             Text(
                 text = subscribe.score.toString(),
                 modifier = Modifier.weight(0.15f)
@@ -52,7 +60,7 @@ fun SubscribeRow(
                 modifier = Modifier.weight(0.15f)
             ) {
                 IconButton(onClick = onDelete) {
-                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.generic_delete))
                 }
             }
         }

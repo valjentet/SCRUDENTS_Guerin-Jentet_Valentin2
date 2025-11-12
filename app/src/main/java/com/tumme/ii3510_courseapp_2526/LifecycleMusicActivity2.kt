@@ -18,10 +18,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import java.io.IOException
 import java.util.Locale // For String.format with Locale
 import androidx.core.net.toUri
+import com.tumme.ii3510_courseapp_2526.R
 
 // --- Constants ---
 private const val TAG = "LifecycleMusicActivity" // Logcat Tag
@@ -472,7 +474,7 @@ fun MusicPlayerWithLifecycleScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Activity Lifecycle & MediaPlayer",
+            text = stringResource(R.string.lifecycle_screen_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -490,7 +492,12 @@ fun MusicPlayerWithLifecycleScreen(
                 uiIsPlaying = nextPlayingState // Optimistically update UI
                 // The actual state will be confirmed/corrected by MediaPlayer via Activity logic
             }) {
-                Text(if (uiIsPlaying) "Pause" else "Play")
+                val actionText = if (uiIsPlaying) {
+                    stringResource(R.string.action_pause)
+                } else {
+                    stringResource(R.string.action_play)
+                }
+                Text(actionText)
             }
 
             Button(onClick = {
@@ -499,7 +506,7 @@ fun MusicPlayerWithLifecycleScreen(
                 currentUiPositionMs = 0
                 totalUiDurationMs = 0 // Duration becomes invalid after stop
             }) {
-                Text("Stop")
+                Text(stringResource(R.string.action_stop))
             }
         }
 
@@ -521,12 +528,17 @@ fun MusicPlayerWithLifecycleScreen(
                     // uiIsPlaying = true
                 }
             }, enabled = true ) { // Enable based on whether it's already selected
-                Text("Song 1 (music_one)")
+                Text(stringResource(R.string.song_one_label))
             }
             // Add another button for a different song if you have one in res/raw
             // Button(onClick = { /* load another_song.mp3 */ }, enabled = uiAudioResId != R.raw.another_song) { Text("Song 2") }
         }
-        Text("Current Audio: ${if (uiAudioResId == R.raw.music_one) "music_one.mp3" else "Other (ID: $uiAudioResId)"}")
+        val currentAudioDetail = if (uiAudioResId == R.raw.music_one) {
+            stringResource(R.string.current_audio_music_one)
+        } else {
+            stringResource(R.string.current_audio_other, uiAudioResId)
+        }
+        Text(stringResource(R.string.current_audio_label, currentAudioDetail))
 
 
         // --- Progress Bar (Slider) ---
@@ -562,7 +574,7 @@ fun MusicPlayerWithLifecycleScreen(
 
         // --- Lifecycle Event Log Display ---
         Text(
-            text = "Lifecycle Events:",
+            text = stringResource(R.string.lifecycle_events_title),
             style = MaterialTheme.typography.titleMedium
         )
         LazyColumn(modifier = Modifier

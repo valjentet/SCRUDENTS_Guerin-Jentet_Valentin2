@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal|center_vertical"
+            android:contentDescription="@string/content_description_jetpack_logo"
             app:srcCompat="@mipmap/jetpack_compose_icon"
             android:layout_marginBottom="20dp"/>
 
@@ -28,8 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:text="Task List"
+            android:text="@string/button_task_list"
             android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/buttonChangeLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/button_change_language"
+            android:contentDescription="@string/content_description_language_button"/>
 
     </LinearLayout>
 

@@ -10,9 +10,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tumme.ii3510_courseapp_2526.model.Task
 import com.tumme.ii3510_courseapp_2526.viewmodel.TaskViewModel
+import com.tumme.ii3510_courseapp_2526.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +25,7 @@ fun TaskListScreen(
     var newTask by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Task List") }) },
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.title_task_list)) }) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -44,7 +46,7 @@ fun TaskListScreen(
             TextField(
                 value = newTask,
                 onValueChange = { newTask = it },
-                label = { Text("New task") },
+                label = { Text(stringResource(R.string.label_new_task)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -74,7 +76,10 @@ fun TaskItem(task: Task, onTaskClick: (Int) -> Unit, onDelete: () -> Unit) {
         ) {
             Text(task.title, style = MaterialTheme.typography.bodyLarge)
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                Icon(
+                    Icons.Default.Delete,
+                    contentDescription = stringResource(R.string.content_description_delete)
+                )
             }
         }
     }
