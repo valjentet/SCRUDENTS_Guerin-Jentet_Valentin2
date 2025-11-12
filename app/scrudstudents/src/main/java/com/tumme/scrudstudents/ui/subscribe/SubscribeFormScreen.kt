@@ -4,14 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -41,8 +43,8 @@ fun SubscribeFormScreen(
     var expandedStudent by remember { mutableStateOf(false) }
     var expandedCourse by remember { mutableStateOf(false) }
 
-    val students by viewModel.students.collectAsState(initial = emptyList())
-    val courses by viewModel.courses.collectAsState(initial = emptyList())
+    val students by viewModel.students.collectAsState(initial = emptyList<StudentEntity>())
+    val courses by viewModel.courses.collectAsState(initial = emptyList<CourseEntity>())
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(stringResource(R.string.subscribe_form_student))
@@ -61,7 +63,7 @@ fun SubscribeFormScreen(
                     .fillMaxWidth()
                     .menuAnchor()
             )
-            ExposedDropdownMenu(
+            DropdownMenu(
                 expanded = expandedStudent,
                 onDismissRequest = { expandedStudent = false }
             ) {
@@ -95,7 +97,7 @@ fun SubscribeFormScreen(
                     .fillMaxWidth()
                     .menuAnchor()
             )
-            ExposedDropdownMenu(
+            DropdownMenu(
                 expanded = expandedCourse,
                 onDismissRequest = { expandedCourse = false }
             ) {
